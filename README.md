@@ -1,1 +1,10 @@
-# US_AOD
+# AOD data
+Air quality data were derived from multiple earth observation datasets via the Google Earth Engine (2018b and 2018c) and they have been widely used in the literature (e.g., Luhar et al., 2008; Johnston et al., 2011; Gupta et al., 2007). We retrieved the aerosol optical depth (AOD) as the typical indicator for air quality. The data comes from the MODIS sensor onboard the Terra and Aqua satellites, provided by NASA's LP DAAC at the USGS EROS Center, and is referred to as the MCD19A2 product . This product can also be accessed through Google Earth Engine. We use the Science Dataset (SDS) layer "Optical_Depth_055," which represents the aerosol optical depth (AOD) observed in the green light band (0.55μm). The AOD is larger than 0, with higher values indicating higher aerosol particle concentration in the air. From the perspective of a ground observer, an AOD value less than 0.1 is characteristic of a clear sky, bright sunshine, and maximum visibility. As the AOD increases to 0.5, 1.0, and beyond 3.0, aerosols become so dense that the sun becomes obscured. 
+
+## Data collection:
+Extract the daily average AOD values for each county-level region in the United States from 2000 to 2022 based on the GEE platform and output csv tables with GEOID and date as identifiers, and AOD regional mean as the value.
+
+## Filling missing AOD:
+The time series data obtained from the GEE platform contains null values for some regions and time periods, indicating unobserved results. To ensure data integrity, we used time series interpolation and spatial interpolation methods to fill in the missing values. 
+1)	Time series interpolation: The step is implemented based on Python’s Pandas package. When time series data in the same region has consecutive missing values for no more than 5 days, cubic spline interpolation is used to fill the gaps. If the interpolated data value is less than 0, it is directly set to 0.
+2)	Gaussian Kriging Spatial Interpolation: For missing data that still exists after time series interpolation, Gaussian Kriging Spatial Interpolation will be used for processing. This step is completed using Python's pykrige package and, based on Aerosol Optical Depth (AOD) values from US counties, infers missing values in nearby regions for the same date.
