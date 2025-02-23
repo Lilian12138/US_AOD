@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
     #### 3. spatial interpolation using kriging
     # open selected us county
+    # the shapefile is save in https://drive.google.com/drive/folders/13SO68GpN0mOgm_0dNFyMSguWS6mL1_5o?usp=sharing
     uscounty_gdf = gpd.read_file(r'AOD_interpolation_processing\uscounty_select.shp')
     time_interp_AOD_df = time_interp_AOD_df.merge(uscounty_gdf, left_on='GEOID', right_on='geoid_j', how = 'left')
     time_interp_AOD_df.drop(columns=['GEOID_y','geoid_j'],inplace=True)
